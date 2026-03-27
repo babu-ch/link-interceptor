@@ -1,8 +1,78 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import CodeBlock from "../components/CodeBlock.vue";
 
 const activeTab = ref("core");
 const tabs = ["core", "vue", "react", "svelte"] as const;
+
+const codeExamples = {
+  core: `import { interceptLinks } from 'link-interceptor'
+
+const cleanup = interceptLinks({
+  onInternalLink(ctx) {
+    ctx.preventDefault()
+    // your router logic
+    history.pushState(null, '', ctx.path)
+  },
+  onExternalLink(ctx) {
+    ctx.url.searchParams.set('utm_source', 'myapp')
+  },
+})
+
+// later: cleanup()`,
+
+  vue: `import { linkInterceptorPlugin } from 'vue-link-interceptor'
+
+app.use(linkInterceptorPlugin, {
+  onInternalLink(ctx) {
+    ctx.preventDefault()
+    router.push(ctx.path)
+  },
+  onExternalLink(ctx) {
+    ctx.url.searchParams.set('utm_source', 'myapp')
+  },
+})`,
+
+  react: `import { useLinkInterceptor } from 'react-link-interceptor'
+
+function App() {
+  useLinkInterceptor({
+    onInternalLink(ctx) {
+      ctx.preventDefault()
+      navigate(ctx.path)  // react-router
+    },
+    onExternalLink(ctx) {
+      ctx.url.searchParams.set('utm_source', 'myapp')
+    },
+  })
+  return <div>...</div>
+}`,
+
+  svelte: ["<scr", "ipt>", `
+  import { linkInterceptor } from 'svelte-link-interceptor'
+
+  const options = {
+    onInternalLink(ctx) {
+      ctx.preventDefault()
+      goto(ctx.path)  // SvelteKit
+    },
+    onExternalLink(ctx) {
+      ctx.url.searchParams.set('utm_source', 'myapp')
+    },
+  }
+`, "</scr", "ipt>", `
+
+<div use:linkInterceptor={options}>
+  ...
+</div>`].join(""),
+};
+
+const installCommands: Record<string, string> = {
+  core: "npm install link-interceptor",
+  vue: "npm install vue-link-interceptor",
+  react: "npm install react-link-interceptor",
+  svelte: "npm install svelte-link-interceptor",
+};
 </script>
 
 <template>
@@ -22,70 +92,12 @@ const tabs = ["core", "vue", "react", "svelte"] as const;
           {{ tab === 'core' ? 'Core' : tab === 'vue' ? 'Vue' : tab === 'react' ? 'React' : 'Svelte' }}
         </button>
       </div>
-      <pre v-if="activeTab === 'core'" class="code-block">npm install link-interceptor
-
-import { interceptLinks } from 'link-interceptor'
-
-const cleanup = interceptLinks({
-  onInternalLink(ctx) {
-    ctx.preventDefault()
-    // your router logic
-    history.pushState(null, '', ctx.path)
-  },
-  onExternalLink(ctx) {
-    ctx.url.searchParams.set('utm_source', 'myapp')
-  },
-})
-
-// later: cleanup()</pre>
-      <pre v-if="activeTab === 'vue'" class="code-block">npm install vue-link-interceptor
-
-import { linkInterceptorPlugin } from 'vue-link-interceptor'
-
-app.use(linkInterceptorPlugin, {
-  onInternalLink(ctx) {
-    ctx.preventDefault()
-    router.push(ctx.path)
-  },
-  onExternalLink(ctx) {
-    ctx.url.searchParams.set('utm_source', 'myapp')
-  },
-})</pre>
-      <pre v-if="activeTab === 'react'" class="code-block">npm install react-link-interceptor
-
-import { useLinkInterceptor } from 'react-link-interceptor'
-
-function App() {
-  useLinkInterceptor({
-    onInternalLink(ctx) {
-      ctx.preventDefault()
-      navigate(ctx.path)  // react-router
-    },
-    onExternalLink(ctx) {
-      ctx.url.searchParams.set('utm_source', 'myapp')
-    },
-  })
-  return &lt;div&gt;...&lt;/div&gt;
-}</pre>
-      <pre v-if="activeTab === 'svelte'" class="code-block">npm install svelte-link-interceptor
-
-&lt;script&gt;
-  import { linkInterceptor } from 'svelte-link-interceptor'
-
-  const options = {
-    onInternalLink(ctx) {
-      ctx.preventDefault()
-      goto(ctx.path)  // SvelteKit
-    },
-    onExternalLink(ctx) {
-      ctx.url.searchParams.set('utm_source', 'myapp')
-    },
-  }
-&lt;/script&gt;
-
-&lt;div use:linkInterceptor={options}&gt;
-  ...
-&lt;/div&gt;</pre>
+      <CodeBlock :code="installCommands[activeTab]" lang="bash" />
+      <CodeBlock
+        :code="codeExamples[activeTab as keyof typeof codeExamples]"
+        :lang="activeTab === 'svelte' ? 'xml' : 'typescript'"
+        style="margin-top: 0.5rem"
+      />
     </div>
 
     <div class="demo-section">
@@ -136,16 +148,5 @@ function App() {
   background: #1a1a2e;
   color: #a0f0a0;
   border-color: #1a1a2e;
-}
-
-.code-block {
-  background: #1a1a2e;
-  color: #a0f0a0;
-  padding: 1rem;
-  border-radius: 0 6px 6px 6px;
-  font-size: 0.8rem;
-  overflow-x: auto;
-  line-height: 1.5;
-  margin-top: 0;
 }
 </style>
