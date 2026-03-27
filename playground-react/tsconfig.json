@@ -6,7 +6,11 @@
     "strict": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "react-link-interceptor": ["../packages/react/src/index.ts"],
+      "link-interceptor": ["../packages/core/src/index.ts"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
 }

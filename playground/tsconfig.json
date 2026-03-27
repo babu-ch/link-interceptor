@@ -8,8 +8,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {
-      "vue-link-interceptor": ["../src/index.ts"]
+      "vue-link-interceptor": ["../packages/vue/src/index.ts"],
+      "link-interceptor": ["../packages/core/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
 }
