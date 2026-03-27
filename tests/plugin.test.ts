@@ -33,7 +33,7 @@ describe("linkInterceptorPlugin", () => {
     cleanup = [];
   });
 
-  it("内部リンククリック時に onInternalLink が呼ばれる", () => {
+  it("calls onInternalLink for same-origin links", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -52,7 +52,7 @@ describe("linkInterceptorPlugin", () => {
     expect(ctx.path).toBe("/about");
   });
 
-  it("外部リンククリック時に onExternalLink が呼ばれる", () => {
+  it("calls onExternalLink for cross-origin links", () => {
     const onExternalLink = vi.fn();
     const { app, root } = mountApp({ onExternalLink });
     cleanup.push(() => {
@@ -71,7 +71,7 @@ describe("linkInterceptorPlugin", () => {
     expect(ctx.url.hostname).toBe("example.com");
   });
 
-  it("modifier key付きクリックはスキップされる", () => {
+  it("skips clicks with modifier keys", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -90,7 +90,7 @@ describe("linkInterceptorPlugin", () => {
     expect(onInternalLink).not.toHaveBeenCalled();
   });
 
-  it("中クリック（button !== 0）はスキップされる", () => {
+  it("skips middle-clicks (button !== 0)", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -106,7 +106,7 @@ describe("linkInterceptorPlugin", () => {
     expect(onInternalLink).not.toHaveBeenCalled();
   });
 
-  it("preventDefault() でデフォルト動作がキャンセルされる", () => {
+  it("cancels default navigation with preventDefault()", () => {
     const onInternalLink = vi.fn((ctx) => ctx.preventDefault());
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -122,7 +122,7 @@ describe("linkInterceptorPlugin", () => {
     expect(event.defaultPrevented).toBe(true);
   });
 
-  it("コールバック内でurl変更するとanchor.hrefに反映される", () => {
+  it("reflects URL mutations back to anchor.href", () => {
     const onExternalLink = vi.fn((ctx) => {
       ctx.url.searchParams.set("back", "true");
     });
@@ -140,7 +140,7 @@ describe("linkInterceptorPlugin", () => {
     expect(a.href).toContain("back=true");
   });
 
-  it("ネストされた要素のクリックでも親の<a>を検出する", () => {
+  it("detects parent <a> from nested element clicks", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -160,7 +160,7 @@ describe("linkInterceptorPlugin", () => {
     expect(onInternalLink).toHaveBeenCalledOnce();
   });
 
-  it("app.unmount()後はリスナーが解除される", () => {
+  it("removes listener after app.unmount()", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
 

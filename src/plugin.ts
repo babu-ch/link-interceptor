@@ -62,7 +62,7 @@ function createClickHandler(options: LinkInterceptorOptions) {
       options.onInternalLink?.(ctx);
     }
 
-    // コールバック内でurl が変更された場合、anchor.href に反映
+    // Reflect URL mutations back to anchor.href
     if (anchor.href !== url.toString()) {
       anchor.href = url.toString();
     }

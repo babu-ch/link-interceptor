@@ -13,10 +13,10 @@ app.use(i18n);
 
 app.use(linkInterceptorPlugin, {
   onInternalLink(ctx) {
-    // Form Guard: 未保存チェック
+    // Form Guard: warn if form has unsaved changes
     if (window.__formIsDirty?.()) {
       ctx.preventDefault();
-      if (confirm("変更が失われます。移動しますか？")) {
+      if (confirm("Unsaved changes will be lost. Continue?")) {
         router.push(ctx.path);
       }
       return;
@@ -25,38 +25,38 @@ app.use(linkInterceptorPlugin, {
     ctx.preventDefault();
     console.log("[Internal]", ctx.path);
 
-    // Analytics: イベント記録
+    // Analytics: record event
     pushAnalyticsEvent("internal", ctx.path);
 
     router.push(ctx.path);
   },
 
   onExternalLink(ctx) {
-    // Security: rel 属性を自動付与
+    // Security: auto-add rel attribute
     ctx.anchor.rel = "noopener noreferrer";
 
-    // Security: 許可リスト外のドメインをブロック
+    // Security: block domains not in allowlist
     if (ctx.anchor.closest("[data-security]")) {
       if (!SECURITY_ALLOWLIST.includes(ctx.url.hostname)) {
         ctx.preventDefault();
         console.log("[Blocked]", ctx.url.hostname, "is not in allowlist");
-        alert(`${ctx.url.hostname} はブロックされています`);
+        alert(`${ctx.url.hostname} is blocked`);
         return;
       }
     }
 
-    // Prevent: data-block 属性付きリンクをブロック
+    // Prevent: block links with data-block attribute
     if (ctx.anchor.dataset.block !== undefined) {
       ctx.preventDefault();
       console.log("[Blocked]", ctx.url.href);
       return;
     }
 
-    // Confirm: data-confirm 属性付きリンクで確認ダイアログ
+    // Confirm: show confirmation dialog for data-confirm links
     if (ctx.anchor.dataset.confirm !== undefined) {
       ctx.preventDefault();
       console.log("[Confirm]", ctx.url.href);
-      if (confirm(`${ctx.url.hostname} に移動しますか？`)) {
+      if (confirm(`Navigate to ${ctx.url.hostname}?`)) {
         window.open(ctx.url.href, "_blank");
       }
       return;
@@ -64,14 +64,14 @@ app.use(linkInterceptorPlugin, {
 
     console.log("[External]", ctx.url.href);
 
-    // Analytics: イベント記録
+    // Analytics: record event
     pushAnalyticsEvent("external", ctx.url.href);
 
-    // デフォルト: 外部リンクに ?from=playground パラメータを付与
+    // Default: append ?from=playground to external links
     ctx.url.searchParams.set("from", "playground");
     console.log("[External] rewritten →", ctx.url.href);
 
-    // 外部リンクは新規タブで開く（playground から離脱しない）
+    // Open external links in new tab (don't leave playground)
     ctx.anchor.target = "_blank";
   },
 });

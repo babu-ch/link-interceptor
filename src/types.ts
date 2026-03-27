@@ -1,21 +1,21 @@
 export interface LinkContext {
-  /** パース済みURL（変更可能、変更はanchor.hrefに反映される） */
+  /** Parsed URL (mutable — changes are reflected on `anchor.href`) */
   url: URL;
-  /** クリックされた<a>要素 */
+  /** The clicked `<a>` element */
   anchor: HTMLAnchorElement;
-  /** 元のクリックイベント */
+  /** The original click event */
   event: MouseEvent;
-  /** url.pathname + url.search + url.hash */
+  /** `url.pathname + url.search + url.hash` */
   path: string;
-  /** 外部リンクかどうか */
+  /** Whether the link is external (different origin) */
   isExternal: boolean;
-  /** デフォルト動作をキャンセル */
+  /** Cancel the default navigation */
   preventDefault(): void;
 }
 
 export interface LinkInterceptorOptions {
-  /** 内部リンク（同一オリジン）クリック時のコールバック */
+  /** Called when an internal (same-origin) link is clicked */
   onInternalLink?: (ctx: LinkContext) => void;
-  /** 外部リンク（別オリジン）クリック時のコールバック */
+  /** Called when an external (different-origin) link is clicked */
   onExternalLink?: (ctx: LinkContext) => void;
 }
