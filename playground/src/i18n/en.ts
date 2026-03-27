@@ -13,10 +13,11 @@ export default {
     switch: "日本語",
   },
   home: {
-    title: "vue-link-interceptor",
+    title: "link-interceptor",
     description:
-      "A Vue 3 plugin that intercepts all {tag} tag clicks in your SPA. Captures at the capture phase and provides callbacks for internal/external links.",
-    basic: "Basic",
+      "Intercept all {tag} tag clicks in your SPA. Framework-agnostic core with Vue, React, and Svelte wrappers. Captures at the capture phase and provides callbacks for internal/external links.",
+    install: "Installation",
+    basic: "Interactive Demos",
     useCases: "Use Cases",
     console: "Console",
     consoleDescription:

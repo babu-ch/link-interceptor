@@ -25,7 +25,7 @@ console.log = (...args: unknown[]) => {
   <div class="layout">
     <header>
       <div class="header-top">
-        <h1>vue-link-interceptor</h1>
+        <h1>link-interceptor</h1>
         <button class="locale-btn" @click="toggleLocale">
           {{ $t("locale.switch") }}
         </button>

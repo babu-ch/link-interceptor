@@ -13,10 +13,11 @@ export default {
     switch: "English",
   },
   home: {
-    title: "vue-link-interceptor",
+    title: "link-interceptor",
     description:
-      "SPA内の全 {tag} タグクリックをインターセプトする Vue 3 プラグイン。capture フェーズで捕捉し、内部/外部リンクそれぞれにコールバックを提供します。",
-    basic: "Basic",
+      "SPA内の全 {tag} タグクリックをインターセプト。フレームワーク非依存のコアに Vue / React / Svelte ラッパーを提供。capture フェーズで捕捉し、内部/外部リンクそれぞれにコールバックを提供します。",
+    install: "インストール",
+    basic: "インタラクティブデモ",
     useCases: "Use Cases",
     console: "Console",
     consoleDescription:

@@ -1,52 +1,103 @@
-# vue-link-interceptor
+# link-interceptor
 
-A Vue 3 plugin that intercepts all `<a>` tag clicks in your SPA. Captures at the [capture phase](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#capture) and provides callbacks for internal and external links.
+Intercept all `<a>` tag clicks in your SPA. Framework-agnostic core with Vue, React, and Svelte wrappers.
+
+## Packages
+
+| Package | Description | |
+|---------|-------------|-|
+| [`link-interceptor`](./packages/core) | Framework-agnostic core | [![npm](https://img.shields.io/npm/v/link-interceptor)](https://www.npmjs.com/package/link-interceptor) |
+| [`vue-link-interceptor`](./packages/vue) | Vue 3 plugin | [![npm](https://img.shields.io/npm/v/vue-link-interceptor)](https://www.npmjs.com/package/vue-link-interceptor) |
+| [`react-link-interceptor`](./packages/react) | React hook | [![npm](https://img.shields.io/npm/v/react-link-interceptor)](https://www.npmjs.com/package/react-link-interceptor) |
+| [`svelte-link-interceptor`](./packages/svelte) | Svelte action | [![npm](https://img.shields.io/npm/v/svelte-link-interceptor)](https://www.npmjs.com/package/svelte-link-interceptor) |
 
 ## Why?
 
-In SPAs, plain `<a>` tags — especially those inside `v-html` or CMS-generated content — bypass Vue Router. This plugin gives you a single hook for **every** anchor click, whether internal or external, without touching individual templates.
-
-## Install
-
-```bash
-npm install vue-link-interceptor
-```
+In SPAs, plain `<a>` tags — especially those inside `v-html` or CMS-generated content — bypass your framework's router. This library gives you a single hook for **every** anchor click, whether internal or external, without touching individual templates.
 
 ## Quick Start
 
+### Core (vanilla JS)
+
 ```ts
-import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { interceptLinks } from 'link-interceptor'
+
+const cleanup = interceptLinks({
+  onInternalLink(ctx) {
+    ctx.preventDefault()
+    history.pushState(null, '', ctx.path)
+  },
+  onExternalLink(ctx) {
+    ctx.url.searchParams.set('utm_source', 'myapp')
+  },
+})
+
+// When done:
+cleanup()
+```
+
+### Vue
+
+```ts
 import { linkInterceptorPlugin } from 'vue-link-interceptor'
 
-const router = createRouter({ /* ... */ })
-const app = createApp(App)
-
-app.use(router)
 app.use(linkInterceptorPlugin, {
   onInternalLink(ctx) {
     ctx.preventDefault()
     router.push(ctx.path)
   },
   onExternalLink(ctx) {
-    // Rewrite URL — changes are reflected on anchor.href
     ctx.url.searchParams.set('utm_source', 'myapp')
   },
 })
+```
 
-app.mount('#app')
+### React
+
+```tsx
+import { useLinkInterceptor } from 'react-link-interceptor'
+
+function App() {
+  useLinkInterceptor({
+    onInternalLink(ctx) {
+      ctx.preventDefault()
+      navigate(ctx.path) // react-router
+    },
+    onExternalLink(ctx) {
+      ctx.url.searchParams.set('utm_source', 'myapp')
+    },
+  })
+  return <div>...</div>
+}
+```
+
+### Svelte
+
+```svelte
+<script>
+  import { linkInterceptor } from 'svelte-link-interceptor'
+
+  const options = {
+    onInternalLink(ctx) {
+      ctx.preventDefault()
+      goto(ctx.path) // SvelteKit
+    },
+    onExternalLink(ctx) {
+      ctx.url.searchParams.set('utm_source', 'myapp')
+    },
+  }
+</script>
+
+<div use:linkInterceptor={options}>
+  ...
+</div>
 ```
 
 ## API
 
-### Plugin Options
+### `interceptLinks(options): () => void`
 
-```ts
-interface LinkInterceptorOptions {
-  onInternalLink?: (ctx: LinkContext) => void
-  onExternalLink?: (ctx: LinkContext) => void
-}
-```
+Registers a capture-phase click listener on `document`. Returns a cleanup function.
 
 ### LinkContext
 
@@ -57,16 +108,16 @@ interface LinkInterceptorOptions {
 | `event` | `MouseEvent` | The original click event |
 | `path` | `string` | `url.pathname + url.search + url.hash` |
 | `isExternal` | `boolean` | Whether the link is external |
+| `isModifierClick` | `boolean` | Whether Ctrl/Meta/Shift/Alt was held |
 | `preventDefault()` | `() => void` | Cancel the default navigation |
 
 ## Behavior
 
-- Registers a **single** listener on `document` in the **capture phase** — runs before any other click handlers
-- Modifier key clicks (Ctrl, Meta, Shift, Alt) and middle-clicks are **skipped** — browser defaults are respected
-- `target="_blank"` links are still intercepted — `href` rewrites are applied before the browser opens the tab
+- **Single listener** on `document` in the **capture phase** — runs before any other click handlers
+- **Modifier key clicks** (Ctrl, Meta, Shift, Alt) still fire callbacks with `isModifierClick: true` — URL rewrites work even when the browser opens a new tab
+- Middle-clicks are skipped
 - Mutating `ctx.url` automatically updates `anchor.href`
 - Calling `ctx.preventDefault()` cancels navigation
-- Listener is **automatically removed** on `app.unmount()`
 
 ## Use Cases
 
@@ -80,67 +131,22 @@ interface LinkInterceptorOptions {
 | Security | External | Block non-allowlisted domains |
 | Attribute injection | External | Auto-add `rel="noopener noreferrer"` |
 
-## Examples
-
-### Confirmation dialog for external links
-
-```ts
-onExternalLink(ctx) {
-  ctx.preventDefault()
-  if (confirm(`Navigate to ${ctx.url.hostname}?`)) {
-    window.open(ctx.url.href, '_blank')
-  }
-}
-```
-
-### Form guard — warn on unsaved changes
-
-```ts
-onInternalLink(ctx) {
-  if (formIsDirty()) {
-    ctx.preventDefault()
-    if (confirm('Unsaved changes will be lost. Continue?')) {
-      router.push(ctx.path)
-    }
-    return
-  }
-  ctx.preventDefault()
-  router.push(ctx.path)
-}
-```
-
-### Security — domain allowlist + rel attribute
-
-```ts
-const allowlist = ['vuejs.org', 'github.com']
-
-onExternalLink(ctx) {
-  ctx.anchor.rel = 'noopener noreferrer'
-
-  if (!allowlist.includes(ctx.url.hostname)) {
-    ctx.preventDefault()
-    alert(`${ctx.url.hostname} is blocked`)
-  }
-}
-```
-
 ## Playground
 
-Interactive demos are available in the `playground/` directory:
+Interactive demos are available at the [playground](./playground):
 
 ```bash
-pnpm dev            # Start dev server
+pnpm dev               # Start dev server
 pnpm build:playground  # Build for GitHub Pages
 ```
 
 ## Development
 
 ```bash
-pnpm install        # Install dependencies
-pnpm test           # Run tests
-pnpm build          # Build library (ESM + CJS + types)
-pnpm lint           # Lint with oxlint
-pnpm fmt            # Format with oxfmt
+pnpm install    # Install dependencies
+pnpm test       # Run all tests
+pnpm build      # Build all packages
+pnpm lint       # Lint all packages
 ```
 
 ## License
