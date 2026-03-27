@@ -2,7 +2,7 @@
   "name": "link-interceptor-monorepo",
   "private": true,
   "scripts": {
-    "dev": "pnpm -C playground dev",
+    "dev:vue": "pnpm -C playground dev",
     "dev:react": "pnpm -C playground-react dev",
     "dev:svelte": "pnpm -C playground-svelte dev",
     "build": "pnpm -r --filter './packages/*' build",
