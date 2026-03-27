@@ -13,14 +13,14 @@
   ],
   "author": "babu-ch",
   "license": "MIT",
-  "homepage": "https://github.com/babu-ch/vue-link-interceptor/tree/main/packages/core",
+  "homepage": "https://github.com/babu-ch/link-interceptor/tree/main/packages/core",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/babu-ch/vue-link-interceptor.git",
+    "url": "git+https://github.com/babu-ch/link-interceptor.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/babu-ch/vue-link-interceptor/issues"
+    "url": "https://github.com/babu-ch/link-interceptor/issues"
   },
   "sideEffects": false,
   "engines": {

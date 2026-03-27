@@ -1,5 +1,5 @@
 {
-  "name": "vue-link-interceptor-monorepo",
+  "name": "link-interceptor-monorepo",
   "private": true,
   "scripts": {
     "dev": "pnpm -C playground dev",

@@ -14,5 +14,5 @@ export default defineConfig({
       ),
     },
   },
-  base: "/vue-link-interceptor/",
+  base: "/link-interceptor/",
 });
