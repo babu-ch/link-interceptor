@@ -3,38 +3,32 @@ import { ref } from "vue";
 
 const events = ref<{ time: string; type: string; url: string }[]>([]);
 
-// window にイベント収集用の配列を公開（main.ts から push される）
 window.__analyticsEvents = events;
 </script>
 
 <template>
   <div>
-    <h2>Analytics / Tracking</h2>
-    <p>
-      リンククリック時にアナリティクスイベントを発火する例。<br />
-      GA4 や Mixpanel への送信をイメージしています。
-    </p>
+    <h2>{{ $t("analytics.title") }}</h2>
+    <p>{{ $t("analytics.description") }}</p>
 
     <div class="demo-section">
-      <h3>リンクをクリックしてみてください</h3>
+      <h3>{{ $t("analytics.tryClick") }}</h3>
       <ul>
-        <li><a href="/internal">内部リンク（ページ遷移）</a></li>
-        <li><a href="https://vuejs.org">vuejs.org（外部）</a></li>
-        <li><a href="https://github.com">github.com（外部）</a></li>
-        <li>
-          <a href="/external">別のデモページへ</a>
-        </li>
+        <li><a href="/internal">{{ $t("analytics.internalLink") }}</a></li>
+        <li><a href="https://vuejs.org">vuejs.org</a></li>
+        <li><a href="https://github.com">github.com</a></li>
+        <li><a href="/external">{{ $t("analytics.anotherDemo") }}</a></li>
       </ul>
     </div>
 
     <div class="demo-section">
-      <h3>収集されたイベント</h3>
+      <h3>{{ $t("analytics.collectedEvents") }}</h3>
       <table v-if="events.length > 0" class="event-table">
         <thead>
           <tr>
-            <th>Time</th>
-            <th>Type</th>
-            <th>URL</th>
+            <th>{{ $t("analytics.time") }}</th>
+            <th>{{ $t("analytics.type") }}</th>
+            <th>{{ $t("analytics.url") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +43,7 @@ window.__analyticsEvents = events;
           </tr>
         </tbody>
       </table>
-      <p v-else class="empty-state">まだイベントがありません</p>
+      <p v-else class="empty-state">{{ $t("analytics.noEvents") }}</p>
     </div>
   </div>
 </template>

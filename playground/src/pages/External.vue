@@ -1,32 +1,25 @@
 <template>
   <div>
-    <h2>External Links</h2>
-    <p>
-      外部リンク（別オリジン）のクリックを <code>onExternalLink</code> で捕捉。<br />
-      このデモでは <code>?from=playground</code> パラメータを自動付与しています。
-    </p>
+    <h2>{{ $t("external.title") }}</h2>
+    <p>{{ $t("external.description") }}</p>
 
     <div class="demo-section">
-      <h3>外部リンク（クリックするとURLが書き換わる）</h3>
+      <h3>{{ $t("external.externalLinks") }}</h3>
       <ul>
         <li><a href="https://example.com">example.com</a></li>
         <li><a href="https://vuejs.org">vuejs.org</a></li>
         <li><a href="https://github.com" target="_blank">github.com (target="_blank")</a></li>
       </ul>
       <p>
-        <small>
-          コンソールで書き換え後のURLを確認してください。<br />
-          <code>target="_blank"</code> のリンクもhook対象です。
-        </small>
+        <small>{{ $t("external.note") }}</small>
       </p>
     </div>
 
     <div class="demo-section">
-      <h3>Modifier Key テスト</h3>
+      <h3>{{ $t("external.modifierTest") }}</h3>
       <p>
-        <a href="https://example.com">このリンク</a> を
-        Ctrl/Cmd + クリック してみてください。<br />
-        modifier key 付きクリックはスキップされ、ブラウザの新規タブ動作が尊重されます。
+        <a href="https://example.com">{{ $t("external.thisLink") }}</a>
+        {{ $t("external.modifierDesc") }}
       </p>
     </div>
   </div>

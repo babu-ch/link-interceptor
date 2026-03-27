@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
 
 const logs = ref<string[]>([]);
+
+function toggleLocale() {
+  locale.value = locale.value === "ja" ? "en" : "ja";
+}
 
 const originalLog = console.log;
 console.log = (...args: unknown[]) => {
@@ -17,16 +24,21 @@ console.log = (...args: unknown[]) => {
 <template>
   <div class="layout">
     <header>
-      <h1>vue-link-interceptor</h1>
+      <div class="header-top">
+        <h1>vue-link-interceptor</h1>
+        <button class="locale-btn" @click="toggleLocale">
+          {{ $t("locale.switch") }}
+        </button>
+      </div>
       <nav>
-        <a href="/">Home</a>
-        <a href="/internal">Internal</a>
-        <a href="/external">External</a>
-        <a href="/prevent">Prevent</a>
-        <a href="/analytics">Analytics</a>
-        <a href="/confirm">Confirm</a>
-        <a href="/form-guard">Form Guard</a>
-        <a href="/security">Security</a>
+        <a href="/">{{ $t("nav.home") }}</a>
+        <a href="/internal">{{ $t("nav.internal") }}</a>
+        <a href="/external">{{ $t("nav.external") }}</a>
+        <a href="/prevent">{{ $t("nav.prevent") }}</a>
+        <a href="/analytics">{{ $t("nav.analytics") }}</a>
+        <a href="/confirm">{{ $t("nav.confirm") }}</a>
+        <a href="/form-guard">{{ $t("nav.formGuard") }}</a>
+        <a href="/security">{{ $t("nav.security") }}</a>
       </nav>
     </header>
 
@@ -35,11 +47,11 @@ console.log = (...args: unknown[]) => {
     </main>
 
     <aside class="console">
-      <h3>Console</h3>
+      <h3>{{ $t("console.title") }}</h3>
       <div class="log-entries">
         <div v-for="(log, i) in logs" :key="i" class="log-entry">{{ log }}</div>
         <div v-if="logs.length === 0" class="log-empty">
-          Click a link to see interceptor logs here
+          {{ $t("console.empty") }}
         </div>
       </div>
     </aside>
@@ -69,9 +81,29 @@ header {
   margin-bottom: 2rem;
 }
 
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
 header h1 {
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+}
+
+.locale-btn {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.locale-btn:hover {
+  background: #f0f0f0;
 }
 
 nav {

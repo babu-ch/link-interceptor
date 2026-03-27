@@ -6,36 +6,32 @@ const email = ref("");
 
 const isDirty = () => name.value !== "" || email.value !== "";
 
-// グローバルに dirty チェック関数を公開（main.ts から参照）
 window.__formIsDirty = isDirty;
 </script>
 
 <template>
   <div>
-    <h2>Form Guard</h2>
-    <p>
-      フォーム編集中にリンクをクリックすると「変更が失われます」と警告する例。<br />
-      未保存の入力がある場合のみ確認ダイアログが表示されます。
-    </p>
+    <h2>{{ $t("formGuard.title") }}</h2>
+    <p>{{ $t("formGuard.description") }}</p>
 
     <div class="demo-section">
-      <h3>フォーム（何か入力してからリンクをクリック）</h3>
+      <h3>{{ $t("formGuard.formSection") }}</h3>
       <div class="form-group">
-        <label>名前</label>
-        <input v-model="name" type="text" placeholder="山田太郎" />
+        <label>{{ $t("formGuard.name") }}</label>
+        <input v-model="name" type="text" :placeholder="$t('formGuard.namePlaceholder')" />
       </div>
       <div class="form-group">
-        <label>メール</label>
-        <input v-model="email" type="email" placeholder="taro@example.com" />
+        <label>{{ $t("formGuard.email") }}</label>
+        <input v-model="email" type="email" :placeholder="$t('formGuard.emailPlaceholder')" />
       </div>
       <div class="dirty-indicator" :class="{ active: isDirty() }">
-        {{ isDirty() ? "未保存の変更があります" : "変更なし" }}
+        {{ isDirty() ? $t("formGuard.dirty") : $t("formGuard.clean") }}
       </div>
     </div>
 
     <div class="demo-section">
-      <h3>ナビゲーションリンク</h3>
-      <p>フォームに入力がある状態でクリックすると確認ダイアログが出ます。</p>
+      <h3>{{ $t("formGuard.navLinks") }}</h3>
+      <p>{{ $t("formGuard.navDesc") }}</p>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/internal">Internal Links</a></li>
@@ -44,11 +40,11 @@ window.__formIsDirty = isDirty;
     </div>
 
     <div class="demo-section">
-      <h3>実装イメージ</h3>
+      <h3>{{ $t("formGuard.implementation") }}</h3>
       <pre class="code-block">onInternalLink(ctx) {
   if (window.__formIsDirty?.()) {
     ctx.preventDefault()
-    if (confirm('変更が失われます。移動しますか？')) {
+    if (confirm('{{ $t("formGuard.confirmLeave") }}')) {
       router.push(ctx.path)
     }
     return

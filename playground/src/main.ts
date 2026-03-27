@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { linkInterceptorPlugin } from "vue-link-interceptor";
 import App from "./App.vue";
+import { i18n } from "./i18n";
 import { router } from "./router";
 
 const SECURITY_ALLOWLIST = ["vuejs.org", "github.com"];
@@ -8,6 +9,7 @@ const SECURITY_ALLOWLIST = ["vuejs.org", "github.com"];
 const app = createApp(App);
 
 app.use(router);
+app.use(i18n);
 
 app.use(linkInterceptorPlugin, {
   onInternalLink(ctx) {
@@ -68,6 +70,9 @@ app.use(linkInterceptorPlugin, {
     // デフォルト: 外部リンクに ?from=playground パラメータを付与
     ctx.url.searchParams.set("from", "playground");
     console.log("[External] rewritten →", ctx.url.href);
+
+    // 外部リンクは新規タブで開く（playground から離脱しない）
+    ctx.anchor.target = "_blank";
   },
 });
 

@@ -1,41 +1,37 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <div>
-    <h2>Confirm Dialog</h2>
-    <p>
-      外部リンククリック時に確認ダイアログを表示する例。<br />
-      「キャンセル」で遷移をブロック、「OK」で遷移を許可します。
-    </p>
+    <h2>{{ $t("confirm.title") }}</h2>
+    <p>{{ $t("confirm.description") }}</p>
 
     <div class="demo-section">
-      <h3>確認ダイアログ付きリンク</h3>
-      <p>以下のリンクには <code>data-confirm</code> 属性が付いています。</p>
+      <h3>{{ $t("confirm.withConfirm") }}</h3>
+      <p>{{ $t("confirm.withConfirmDesc") }}</p>
       <ul>
         <li>
           <a href="https://example.com" data-confirm>
-            example.com（確認あり）
+            example.com{{ $t("confirm.confirmSuffix") }}
           </a>
         </li>
         <li>
           <a href="https://vuejs.org" data-confirm>
-            vuejs.org（確認あり）
+            vuejs.org{{ $t("confirm.confirmSuffix") }}
           </a>
         </li>
       </ul>
     </div>
 
     <div class="demo-section">
-      <h3>確認なしのリンク（通常動作）</h3>
+      <h3>{{ $t("confirm.withoutConfirm") }}</h3>
       <ul>
-        <li><a href="https://github.com">github.com（確認なし）</a></li>
-        <li><a href="/internal">内部リンク（確認なし）</a></li>
+        <li>
+          <a href="https://github.com">github.com{{ $t("confirm.withoutConfirmSuffix") }}</a>
+        </li>
+        <li><a href="/internal">{{ $t("confirm.internalLink") }}</a></li>
       </ul>
     </div>
 
     <div class="demo-section">
-      <h3>実装イメージ</h3>
+      <h3>{{ $t("confirm.implementation") }}</h3>
       <pre class="code-block">onExternalLink(ctx) {
   if (ctx.anchor.dataset.confirm !== undefined) {
     ctx.preventDefault()

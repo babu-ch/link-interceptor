@@ -1,47 +1,38 @@
 <template>
   <div>
-    <h2>Security</h2>
-    <p>
-      外部リンクに対するセキュリティ制御の例。<br />
-      許可リスト制御と <code>rel</code> 属性の自動付与を組み合わせています。
-    </p>
+    <h2>{{ $t("security.title") }}</h2>
+    <p>{{ $t("security.description") }}</p>
 
     <div class="demo-section" data-security>
-      <h3>許可リスト（Allowlist）</h3>
-      <p>
-        許可済みドメイン: <code>vuejs.org</code>, <code>github.com</code><br />
-        それ以外はブロックされます。
-      </p>
+      <h3>{{ $t("security.allowlist") }}</h3>
+      <p>{{ $t("security.allowlistDesc", { domains: "vuejs.org, github.com" }) }}</p>
       <ul>
         <li>
           <a href="https://vuejs.org">vuejs.org</a>
-          <span class="status allowed">許可</span>
+          <span class="status allowed">{{ $t("security.allowed") }}</span>
         </li>
         <li>
           <a href="https://github.com">github.com</a>
-          <span class="status allowed">許可</span>
+          <span class="status allowed">{{ $t("security.allowed") }}</span>
         </li>
         <li>
           <a href="https://suspicious-site.example.com">suspicious-site.example.com</a>
-          <span class="status blocked">ブロック</span>
+          <span class="status blocked">{{ $t("security.blocked") }}</span>
         </li>
         <li>
           <a href="https://unknown.example.com">unknown.example.com</a>
-          <span class="status blocked">ブロック</span>
+          <span class="status blocked">{{ $t("security.blocked") }}</span>
         </li>
       </ul>
     </div>
 
     <div class="demo-section">
-      <h3>rel 属性の自動付与</h3>
-      <p>
-        全ての外部リンクに <code>rel="noopener noreferrer"</code> が自動付与されます。<br />
-        DevTools の Elements パネルで確認できます。
-      </p>
+      <h3>{{ $t("security.relSection") }}</h3>
+      <p>{{ $t("security.relDesc") }}</p>
     </div>
 
     <div class="demo-section">
-      <h3>実装イメージ</h3>
+      <h3>{{ $t("security.implementation") }}</h3>
       <pre class="code-block">const allowlist = ['vuejs.org', 'github.com']
 
 onExternalLink(ctx) {

@@ -4,8 +4,6 @@ import { ref } from "vue";
 const blocked = ref(false);
 const blockedUrl = ref("");
 
-// グローバルのonExternalLinkで処理されるが、
-// ここではページ固有のUI表示のためにイベントを監視
 const onClickCapture = (e: Event) => {
   const target = e.target as HTMLElement;
   const anchor = target.closest("a");
@@ -21,31 +19,25 @@ const onClickCapture = (e: Event) => {
 
 <template>
   <div @click.capture="onClickCapture">
-    <h2>Prevent Default</h2>
-    <p>
-      コールバック内で <code>ctx.preventDefault()</code> を呼ぶことで、
-      リンクの遷移をキャンセルできます。
-    </p>
+    <h2>{{ $t("prevent.title") }}</h2>
+    <p>{{ $t("prevent.description") }}</p>
 
     <div class="demo-section">
-      <h3>通常の内部リンク（遷移する）</h3>
-      <p><a href="/">Home に遷移</a></p>
+      <h3>{{ $t("prevent.normalLink") }}</h3>
+      <p><a href="/">{{ $t("prevent.toHome") }}</a></p>
     </div>
 
     <div class="demo-section">
-      <h3>ブロック対象のリンク（遷移しない）</h3>
-      <p>
-        以下のリンクは <code>data-block</code> 属性が付いており、
-        main.ts側で遷移をブロックする想定のデモです。
-      </p>
+      <h3>{{ $t("prevent.blockedLinks") }}</h3>
+      <p>{{ $t("prevent.blockedDesc") }}</p>
       <p>
         <a href="https://blocked.example.com" data-block>
-          blocked.example.com（クリックしても遷移しない）
+          {{ $t("prevent.blockedLink") }}
         </a>
       </p>
 
       <div v-if="blocked" class="blocked-toast">
-        {{ blockedUrl }} への遷移をブロックしました
+        {{ $t("prevent.blockedToast", { url: blockedUrl }) }}
       </div>
     </div>
   </div>
