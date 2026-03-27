@@ -50,13 +50,11 @@
     "test": "vp test run",
     "lint": "vp lint"
   },
-  "dependencies": {
-    "link-interceptor": "workspace:*"
-  },
   "peerDependencies": {
     "svelte": "^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
+    "link-interceptor": "workspace:*",
     "jsdom": "^29.0.1",
     "svelte": "^5.0.0",
     "typescript": "^5.8.2",

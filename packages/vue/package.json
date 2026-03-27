@@ -51,13 +51,11 @@
     "test": "vp test run",
     "lint": "vp lint"
   },
-  "dependencies": {
-    "link-interceptor": "workspace:*"
-  },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "link-interceptor": "workspace:*",
     "jsdom": "^29.0.1",
     "typescript": "^5.8.2",
     "vite-plus": "^0.1.14",

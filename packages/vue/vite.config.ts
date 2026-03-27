@@ -14,7 +14,7 @@ export default defineConfig({
     dts: true,
     format: ["esm", "cjs"],
     deps: {
-      neverBundle: ["vue", "link-interceptor"],
+      neverBundle: ["vue"],
     },
   },
   test: {

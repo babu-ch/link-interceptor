@@ -21,10 +21,6 @@ importers:
         version: 0.1.14(jsdom@29.0.1)(typescript@5.8.2)(vite@8.0.3)
 
   packages/react:
-    dependencies:
-      link-interceptor:
-        specifier: workspace:*
-        version: link:../core
     devDependencies:
       '@testing-library/react':
         specifier: ^16.0.0
@@ -35,6 +31,9 @@ importers:
       jsdom:
         specifier: ^29.0.1
         version: 29.0.1
+      link-interceptor:
+        specifier: workspace:*
+        version: link:../core
       react:
         specifier: ^19.0.0
         version: 19.2.4
@@ -49,14 +48,13 @@ importers:
         version: 0.1.14(jsdom@29.0.1)(typescript@5.8.2)(vite@8.0.3)
 
   packages/svelte:
-    dependencies:
-      link-interceptor:
-        specifier: workspace:*
-        version: link:../core
     devDependencies:
       jsdom:
         specifier: ^29.0.1
         version: 29.0.1
+      link-interceptor:
+        specifier: workspace:*
+        version: link:../core
       svelte:
         specifier: ^5.0.0
         version: 5.55.0
@@ -68,14 +66,13 @@ importers:
         version: 0.1.14(jsdom@29.0.1)(typescript@5.8.2)(vite@8.0.3)
 
   packages/vue:
-    dependencies:
-      link-interceptor:
-        specifier: workspace:*
-        version: link:../core
     devDependencies:
       jsdom:
         specifier: ^29.0.1
         version: 29.0.1
+      link-interceptor:
+        specifier: workspace:*
+        version: link:../core
       typescript:
         specifier: ^5.8.2
         version: 5.8.2

@@ -50,13 +50,11 @@
     "test": "vp test run",
     "lint": "vp lint"
   },
-  "dependencies": {
-    "link-interceptor": "workspace:*"
-  },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "link-interceptor": "workspace:*",
     "@testing-library/react": "^16.0.0",
     "@types/react": "^19.2.14",
     "jsdom": "^29.0.1",

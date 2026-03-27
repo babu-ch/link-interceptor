@@ -14,7 +14,7 @@ export default defineConfig({
     dts: true,
     format: ["esm", "cjs"],
     deps: {
-      neverBundle: ["svelte", "link-interceptor"],
+      neverBundle: ["svelte"],
     },
   },
   test: {
