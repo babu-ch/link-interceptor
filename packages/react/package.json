@@ -1,6 +1,6 @@
 {
   "name": "react-link-interceptor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React hook to intercept all <a> tag clicks in your SPA — handle internal routing and external link modifications with ease.",
   "keywords": [
     "anchor",
@@ -13,7 +13,7 @@
   ],
   "author": "babu-ch",
   "license": "MIT",
-  "homepage": "https://babu-ch.github.io/link-interceptor/",
+  "homepage": "https://babu-ch.github.io/link-interceptor/?fw=react",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/babu-ch/link-interceptor.git",

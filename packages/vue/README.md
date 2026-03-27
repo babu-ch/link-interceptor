@@ -26,7 +26,7 @@ app.use(linkInterceptorPlugin, {
 
 ## Docs & Playground
 
-https://babu-ch.github.io/link-interceptor/
+https://babu-ch.github.io/link-interceptor/?fw=vue
 
 ## License
 

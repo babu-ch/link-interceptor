@@ -32,7 +32,7 @@ npm install svelte-link-interceptor
 
 ## Docs & Playground
 
-https://babu-ch.github.io/link-interceptor/
+https://babu-ch.github.io/link-interceptor/?fw=svelte
 
 ## License
 

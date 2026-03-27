@@ -29,7 +29,7 @@ function App() {
 
 ## Docs & Playground
 
-https://babu-ch.github.io/link-interceptor/
+https://babu-ch.github.io/link-interceptor/?fw=react
 
 ## License
 

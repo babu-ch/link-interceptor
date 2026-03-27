@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 import CodeBlock from "../components/CodeBlock.vue";
 
-const activeTab = ref("core");
 const tabs = ["core", "vue", "react", "svelte"] as const;
+type Tab = (typeof tabs)[number];
+
+const route = useRoute();
+const fwParam = route.query.fw as string | undefined;
+const initialTab: Tab = tabs.includes(fwParam as Tab) ? (fwParam as Tab) : "core";
+const activeTab = ref<Tab>(initialTab);
 
 const codeExamples = {
   core: `import { interceptLinks } from 'link-interceptor'
