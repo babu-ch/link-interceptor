@@ -37,7 +37,10 @@
     }
   },
   "scripts": {
+    "dev": "pnpm -C playground dev",
     "build": "vp pack",
+    "build:playground": "pnpm -C playground build",
+    "preview:playground": "pnpm -C playground preview",
     "test": "vp test run",
     "test:watch": "vp test",
     "lint": "vp lint",
