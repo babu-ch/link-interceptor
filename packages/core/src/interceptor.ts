@@ -11,10 +11,9 @@ export function interceptLinks(options: LinkInterceptorOptions): () => void {
 }
 
 function findAnchorFromEvent(event: Event): HTMLAnchorElement | null {
-  let el = event.target as HTMLElement | null;
-  while (el) {
-    if (el.tagName === "A") return el as HTMLAnchorElement;
-    el = el.parentElement;
+  // Use composedPath to cross shadow DOM boundaries
+  for (const el of event.composedPath()) {
+    if (el instanceof HTMLAnchorElement) return el;
   }
   return null;
 }
@@ -38,6 +37,9 @@ function createClickHandler(options: LinkInterceptorOptions) {
     } catch {
       return;
     }
+
+    // Skip non-http(s) protocols (javascript:, mailto:, tel:, data:, etc.)
+    if (url.protocol !== "http:" && url.protocol !== "https:") return;
 
     const isExternal = url.origin !== window.location.origin;
     const ctx: LinkContext = {

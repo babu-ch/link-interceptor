@@ -37,6 +37,20 @@ describe("useLinkInterceptor (React)", () => {
     expect(onInternalLink).toHaveBeenCalledOnce();
   });
 
+  it("uses updated callback when options change", () => {
+    const callback1 = vi.fn();
+    const callback2 = vi.fn();
+    const { rerender } = render(<TestComponent onInternalLink={callback1} />);
+
+    rerender(<TestComponent onInternalLink={callback2} />);
+
+    const a = createAnchor(`${window.location.origin}/about`);
+    clickAnchor(a);
+
+    expect(callback1).not.toHaveBeenCalled();
+    expect(callback2).toHaveBeenCalledOnce();
+  });
+
   it("removes listener on unmount", () => {
     const onInternalLink = vi.fn();
     const { unmount } = render(<TestComponent onInternalLink={onInternalLink} />);

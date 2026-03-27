@@ -118,6 +118,30 @@ describe("interceptLinks", () => {
     expect(onInternalLink).toHaveBeenCalledOnce();
   });
 
+  it("ignores javascript: protocol links", () => {
+    const onInternalLink = vi.fn();
+    const onExternalLink = vi.fn();
+    cleanups.push(interceptLinks({ onInternalLink, onExternalLink }));
+
+    const a = createAnchor("javascript:void(0)");
+    clickAnchor(a);
+
+    expect(onInternalLink).not.toHaveBeenCalled();
+    expect(onExternalLink).not.toHaveBeenCalled();
+  });
+
+  it("ignores anchors with no href", () => {
+    const onInternalLink = vi.fn();
+    cleanups.push(interceptLinks({ onInternalLink }));
+
+    const a = document.createElement("a");
+    a.textContent = "no href";
+    document.body.appendChild(a);
+    clickAnchor(a);
+
+    expect(onInternalLink).not.toHaveBeenCalled();
+  });
+
   it("removes listener when cleanup is called", () => {
     const onInternalLink = vi.fn();
     const cleanup = interceptLinks({ onInternalLink });
