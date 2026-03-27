@@ -20,9 +20,13 @@ console.log = (...args: unknown[]) => {
       <h1>vue-link-interceptor</h1>
       <nav>
         <a href="/">Home</a>
-        <a href="/internal">Internal Links</a>
-        <a href="/external">External Links</a>
-        <a href="/prevent">Prevent Default</a>
+        <a href="/internal">Internal</a>
+        <a href="/external">External</a>
+        <a href="/prevent">Prevent</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/confirm">Confirm</a>
+        <a href="/form-guard">Form Guard</a>
+        <a href="/security">Security</a>
       </nav>
     </header>
 
@@ -72,7 +76,8 @@ header h1 {
 
 nav {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
 }
 
 nav a {
