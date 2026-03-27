@@ -1,6 +1,6 @@
 {
   "name": "svelte-link-interceptor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte action to intercept all <a> tag clicks in your SPA — handle internal routing and external link modifications with ease.",
   "keywords": [
     "anchor",
@@ -27,6 +27,7 @@
     "node": ">=18.0.0"
   },
   "files": [
+    "README.md",
     "dist"
   ],
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "link-interceptor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Intercept all <a> tag clicks in your SPA — framework-agnostic core for handling internal and external link navigation.",
   "keywords": [
     "anchor",
@@ -27,6 +27,7 @@
     "node": ">=18.0.0"
   },
   "files": [
+    "README.md",
     "dist"
   ],
   "type": "module",
