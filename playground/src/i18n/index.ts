@@ -4,7 +4,7 @@ import en from "./en";
 
 export const i18n = createI18n({
   legacy: false,
-  locale: "ja",
-  fallbackLocale: "en",
+  locale: "en",
+  fallbackLocale: "ja",
   messages: { ja, en },
 });
