@@ -2,49 +2,55 @@
   "name": "vue-link-interceptor",
   "version": "0.1.0",
   "description": "Vue 3 plugin to intercept all <a> tag clicks in your SPA — handle internal routing and external link modifications with ease.",
-  "type": "module",
-  "main": "./dist/vue-link-interceptor.cjs",
-  "module": "./dist/vue-link-interceptor.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/vue-link-interceptor.js",
-      "require": "./dist/vue-link-interceptor.cjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
-  "peerDependencies": {
-    "vue": "^3.0.0"
-  },
-  "devDependencies": {
-    "jsdom": "^29.0.1",
-    "typescript": "^6.0.2",
-    "vite": "^8.0.3",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.1.2",
-    "vue": "^3.5.31"
-  },
   "keywords": [
-    "vue",
-    "vue3",
-    "plugin",
-    "link",
+    "anchor",
     "interceptor",
-    "spa",
+    "link",
+    "plugin",
     "router",
-    "anchor"
+    "spa",
+    "vue",
+    "vue3"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/and and/vue-link-interceptor"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "test": "vp test run",
+    "test:watch": "vp test",
+    "lint": "vp lint",
+    "fmt": "vp fmt",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "jsdom": "^29.0.1",
+    "typescript": "^5.8.2",
+    "vite-plus": "^0.1.14",
+    "vue": "^3.5.31"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   }
 }

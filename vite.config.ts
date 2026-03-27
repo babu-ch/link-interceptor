@@ -1,22 +1,16 @@
-import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
+import { defineConfig } from "vite-plus";
 
 export default defineConfig({
-  plugins: [
-    dts({ rollupTypes: true }),
-  ],
-  build: {
-    lib: {
-      entry: 'src/index.ts',
-      name: 'VueLinkInterceptor',
-      formats: ['es', 'cjs'],
-      fileName: 'vue-link-interceptor',
-    },
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        globals: { vue: 'Vue' },
-      },
+  pack: {
+    entry: "src/index.ts",
+    dts: true,
+    format: ["esm", "cjs"],
+    deps: {
+      neverBundle: ["vue"],
     },
   },
-})
+  test: {
+    environment: "jsdom",
+    globals: true,
+  },
+});
