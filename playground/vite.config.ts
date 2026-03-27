@@ -7,7 +7,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "vue-link-interceptor": fileURLToPath(
-        new URL("../src/index.ts", import.meta.url),
+        new URL("../packages/vue/src/index.ts", import.meta.url),
+      ),
+      "link-interceptor": fileURLToPath(
+        new URL("../packages/core/src/index.ts", import.meta.url),
       ),
     },
   },

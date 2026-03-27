@@ -1,0 +1,66 @@
+{
+  "name": "vue-link-interceptor",
+  "version": "0.1.0",
+  "description": "Vue 3 plugin to intercept all <a> tag clicks in your SPA — handle internal routing and external link modifications with ease.",
+  "keywords": [
+    "anchor",
+    "interceptor",
+    "link",
+    "plugin",
+    "router",
+    "spa",
+    "vue",
+    "vue3"
+  ],
+  "author": "babu-ch",
+  "license": "MIT",
+  "homepage": "https://github.com/babu-ch/vue-link-interceptor/tree/main/packages/vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babu-ch/vue-link-interceptor.git",
+    "directory": "packages/vue"
+  },
+  "bugs": {
+    "url": "https://github.com/babu-ch/vue-link-interceptor/issues"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "test": "vp test run",
+    "lint": "vp lint"
+  },
+  "dependencies": {
+    "link-interceptor": "workspace:*"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "^29.0.1",
+    "typescript": "^5.8.2",
+    "vite-plus": "^0.1.14",
+    "vue": "^3.5.31"
+  }
+}

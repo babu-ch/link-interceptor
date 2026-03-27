@@ -1,19 +1,14 @@
-import type { Plugin } from "vue";
 import type { LinkContext, LinkInterceptorOptions } from "./types";
 
-export const linkInterceptorPlugin: Plugin<[LinkInterceptorOptions]> = {
-  install(_app, options) {
-    const handler = createClickHandler(options);
-
-    document.addEventListener("click", handler, true);
-
-    const originalUnmount = _app.unmount.bind(_app);
-    _app.unmount = () => {
-      document.removeEventListener("click", handler, true);
-      originalUnmount();
-    };
-  },
-};
+/**
+ * Intercept all `<a>` tag clicks on the document.
+ * Returns a cleanup function that removes the listener.
+ */
+export function interceptLinks(options: LinkInterceptorOptions): () => void {
+  const handler = createClickHandler(options);
+  document.addEventListener("click", handler, true);
+  return () => document.removeEventListener("click", handler, true);
+}
 
 function findAnchorFromEvent(event: Event): HTMLAnchorElement | null {
   let el = event.target as HTMLElement | null;

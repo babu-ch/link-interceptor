@@ -1,21 +1,11 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { createApp, defineComponent } from "vue";
-import { linkInterceptorPlugin } from "../src/plugin";
+import { interceptLinks } from "../src/interceptor";
 
-function mountApp(options: Parameters<typeof linkInterceptorPlugin.install>[1]) {
-  const app = createApp(defineComponent({ template: '<div id="app"></div>' }));
-  const root = document.createElement("div");
-  document.body.appendChild(root);
-  app.use(linkInterceptorPlugin, options);
-  app.mount(root);
-  return { app, root };
-}
-
-function createAnchor(href: string, parent?: HTMLElement): HTMLAnchorElement {
+function createAnchor(href: string): HTMLAnchorElement {
   const a = document.createElement("a");
   a.href = href;
   a.textContent = "link";
-  (parent ?? document.body).appendChild(a);
+  document.body.appendChild(a);
   return a;
 }
 
@@ -25,25 +15,20 @@ function clickAnchor(a: HTMLAnchorElement, opts?: MouseEventInit) {
   return event;
 }
 
-describe("linkInterceptorPlugin", () => {
-  let cleanup: (() => void)[] = [];
+describe("interceptLinks", () => {
+  let cleanups: (() => void)[] = [];
 
   afterEach(() => {
-    cleanup.forEach((fn) => fn());
-    cleanup = [];
+    cleanups.forEach((fn) => fn());
+    cleanups = [];
+    document.body.innerHTML = "";
   });
 
   it("calls onInternalLink for same-origin links", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
     clickAnchor(a);
 
     expect(onInternalLink).toHaveBeenCalledOnce();
@@ -54,15 +39,9 @@ describe("linkInterceptorPlugin", () => {
 
   it("calls onExternalLink for cross-origin links", () => {
     const onExternalLink = vi.fn();
-    const { app, root } = mountApp({ onExternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onExternalLink }));
 
     const a = createAnchor("https://example.com/page");
-    cleanup.push(() => a.remove());
-
     clickAnchor(a);
 
     expect(onExternalLink).toHaveBeenCalledOnce();
@@ -73,15 +52,9 @@ describe("linkInterceptorPlugin", () => {
 
   it("still calls callback on modifier key clicks with isModifierClick=true", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
     clickAnchor(a, { metaKey: true });
 
     expect(onInternalLink).toHaveBeenCalledOnce();
@@ -90,15 +63,9 @@ describe("linkInterceptorPlugin", () => {
 
   it("sets isModifierClick=false for normal clicks", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
     clickAnchor(a);
 
     expect(onInternalLink.mock.calls[0][0].isModifierClick).toBe(false);
@@ -106,15 +73,9 @@ describe("linkInterceptorPlugin", () => {
 
   it("skips middle-clicks (button !== 0)", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
     clickAnchor(a, { button: 1 });
 
     expect(onInternalLink).not.toHaveBeenCalled();
@@ -122,15 +83,9 @@ describe("linkInterceptorPlugin", () => {
 
   it("cancels default navigation with preventDefault()", () => {
     const onInternalLink = vi.fn((ctx) => ctx.preventDefault());
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
     const event = clickAnchor(a);
 
     expect(event.defaultPrevented).toBe(true);
@@ -140,15 +95,9 @@ describe("linkInterceptorPlugin", () => {
     const onExternalLink = vi.fn((ctx) => {
       ctx.url.searchParams.set("back", "true");
     });
-    const { app, root } = mountApp({ onExternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onExternalLink }));
 
     const a = createAnchor("https://example.com/page");
-    cleanup.push(() => a.remove());
-
     clickAnchor(a);
 
     expect(a.href).toContain("back=true");
@@ -156,17 +105,12 @@ describe("linkInterceptorPlugin", () => {
 
   it("detects parent <a> from nested element clicks", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
-    cleanup.push(() => {
-      app.unmount();
-      root.remove();
-    });
+    cleanups.push(interceptLinks({ onInternalLink }));
 
     const a = createAnchor(`${window.location.origin}/about`);
     const span = document.createElement("span");
     span.textContent = "nested";
     a.appendChild(span);
-    cleanup.push(() => a.remove());
 
     const event = new MouseEvent("click", { bubbles: true, cancelable: true });
     span.dispatchEvent(event);
@@ -174,16 +118,12 @@ describe("linkInterceptorPlugin", () => {
     expect(onInternalLink).toHaveBeenCalledOnce();
   });
 
-  it("removes listener after app.unmount()", () => {
+  it("removes listener when cleanup is called", () => {
     const onInternalLink = vi.fn();
-    const { app, root } = mountApp({ onInternalLink });
+    const cleanup = interceptLinks({ onInternalLink });
 
     const a = createAnchor(`${window.location.origin}/about`);
-    cleanup.push(() => a.remove());
-
-    app.unmount();
-    root.remove();
-
+    cleanup();
     clickAnchor(a);
 
     expect(onInternalLink).not.toHaveBeenCalled();

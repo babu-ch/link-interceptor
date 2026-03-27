@@ -1,2 +1,2 @@
-export { linkInterceptorPlugin } from "./plugin";
+export { interceptLinks } from "./interceptor";
 export type { LinkContext, LinkInterceptorOptions } from "./types";
