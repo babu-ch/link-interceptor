@@ -26,8 +26,10 @@ function findAnchorFromEvent(event: Event): HTMLAnchorElement | null {
 
 function createClickHandler(options: LinkInterceptorOptions) {
   return (event: MouseEvent) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     if (event.button !== 0) return;
+
+    const isModifierClick =
+      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 
     const anchor = findAnchorFromEvent(event);
     if (!anchor) return;
@@ -51,6 +53,7 @@ function createClickHandler(options: LinkInterceptorOptions) {
         return this.url.pathname + this.url.search + this.url.hash;
       },
       isExternal,
+      isModifierClick,
       preventDefault() {
         event.preventDefault();
       },

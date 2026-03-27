@@ -71,7 +71,7 @@ describe("linkInterceptorPlugin", () => {
     expect(ctx.url.hostname).toBe("example.com");
   });
 
-  it("skips clicks with modifier keys", () => {
+  it("still calls callback on modifier key clicks with isModifierClick=true", () => {
     const onInternalLink = vi.fn();
     const { app, root } = mountApp({ onInternalLink });
     cleanup.push(() => {
@@ -83,11 +83,25 @@ describe("linkInterceptorPlugin", () => {
     cleanup.push(() => a.remove());
 
     clickAnchor(a, { metaKey: true });
-    clickAnchor(a, { ctrlKey: true });
-    clickAnchor(a, { shiftKey: true });
-    clickAnchor(a, { altKey: true });
 
-    expect(onInternalLink).not.toHaveBeenCalled();
+    expect(onInternalLink).toHaveBeenCalledOnce();
+    expect(onInternalLink.mock.calls[0][0].isModifierClick).toBe(true);
+  });
+
+  it("sets isModifierClick=false for normal clicks", () => {
+    const onInternalLink = vi.fn();
+    const { app, root } = mountApp({ onInternalLink });
+    cleanup.push(() => {
+      app.unmount();
+      root.remove();
+    });
+
+    const a = createAnchor(`${window.location.origin}/about`);
+    cleanup.push(() => a.remove());
+
+    clickAnchor(a);
+
+    expect(onInternalLink.mock.calls[0][0].isModifierClick).toBe(false);
   });
 
   it("skips middle-clicks (button !== 0)", () => {

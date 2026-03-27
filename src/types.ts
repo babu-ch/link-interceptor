@@ -9,6 +9,8 @@ export interface LinkContext {
   path: string;
   /** Whether the link is external (different origin) */
   isExternal: boolean;
+  /** Whether a modifier key (Ctrl/Meta/Shift/Alt) was held during the click */
+  isModifierClick: boolean;
   /** Cancel the default navigation */
   preventDefault(): void;
 }
