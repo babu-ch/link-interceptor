@@ -147,7 +147,7 @@ onInternalLink(ctx) {
 },
 ```
 
-See the [playground](./playground) Internal Links page for a live demo.
+See the [playground](https://babu-ch.github.io/link-interceptor/) Internal Links page for a live demo.
 
 ## Use Cases
 
