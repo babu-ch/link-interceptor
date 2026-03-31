@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { LANGUAGE_NAMES } from "./i18n";
 
 const { locale } = useI18n();
 
 const logs = ref<string[]>([]);
-
-function toggleLocale() {
-  locale.value = locale.value === "ja" ? "en" : "ja";
-}
 
 const originalLog = console.log;
 console.log = (...args: unknown[]) => {
@@ -26,9 +23,11 @@ console.log = (...args: unknown[]) => {
     <header>
       <div class="header-top">
         <h1>link-interceptor</h1>
-        <button class="locale-btn" @click="toggleLocale">
-          {{ $t("locale.switch") }}
-        </button>
+        <select v-model="locale" class="locale-select">
+          <option v-for="(name, code) in LANGUAGE_NAMES" :key="code" :value="code">
+            {{ name }}
+          </option>
+        </select>
       </div>
       <nav>
         <router-link to="/">{{ $t("nav.home") }}</router-link>
@@ -92,18 +91,23 @@ header h1 {
   font-size: 1.5rem;
 }
 
-.locale-btn {
-  padding: 0.3rem 0.75rem;
+.locale-select {
+  padding: 0.3rem 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   background: #fff;
   color: #333;
   font-size: 0.8rem;
   cursor: pointer;
+  outline: none;
 }
 
-.locale-btn:hover {
+.locale-select:hover {
   background: #f0f0f0;
+}
+
+.locale-select:focus {
+  border-color: #4361ee;
 }
 
 nav {

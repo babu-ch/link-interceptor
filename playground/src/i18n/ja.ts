@@ -9,10 +9,7 @@ export default {
     formGuard: "Form Guard",
     security: "Security",
   },
-  locale: {
-    switch: "English",
-  },
-  home: {
+home: {
     title: "link-interceptor",
     description:
       "SPA内の全 {tag} タグクリックをインターセプト。フレームワーク非依存のコアに Vue / React / Svelte ラッパーを提供。capture フェーズで捕捉し、内部/外部リンクそれぞれにコールバックを提供します。",
