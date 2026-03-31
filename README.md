@@ -2,6 +2,8 @@
 
 Intercept all `<a>` tag clicks in your SPA. Framework-agnostic core with Vue, React, and Svelte wrappers.
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/babu-ch/link-interceptor)
+
 ## Packages
 
 | Package | Description | |
