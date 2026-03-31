@@ -54,9 +54,10 @@ export default {
     routerLinkGotcha: "Gotcha: router-link replace",
     routerLinkGotchaDesc:
       "The interceptor captures <router-link replace> clicks too. If the callback calls ctx.preventDefault() and router.push(), the replace prop is silently ignored — a history entry is added instead of replaced.",
-    routerLinkReplace: "router-link to Home (replace, with data-no-intercept) — click, then press Back",
+    routerLinkReplaceBroken: "without workaround — replace is ignored (click, then press Back to see)",
+    routerLinkReplaceFixed: "with data-no-intercept — replace works (click, then press Back to compare)",
     routerLinkGotchaNote:
-      "The link above has a data-no-intercept attribute. The callback detects it and skips ctx.preventDefault(), letting RouterLink handle navigation with replace intact. Try clicking, then use the Back button — you will NOT return to this page.",
+      "The first link has no workaround: the interceptor calls preventDefault() + router.push(), so replace is lost and a history entry is added. The second link has data-no-intercept: the callback skips preventDefault(), letting RouterLink handle navigation with replace intact.",
     routerLinkWorkaround:
       "Workaround: add a data-no-intercept attribute to <router-link> elements that need to preserve props like replace. In the callback, check ctx.anchor.hasAttribute('data-no-intercept') and skip ctx.preventDefault() so RouterLink handles navigation itself. See main.ts for the implementation.",
   },

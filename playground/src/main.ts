@@ -5,6 +5,8 @@ import { i18n } from "./i18n";
 import { router } from "./router";
 
 const SECURITY_ALLOWLIST = ["vuejs.org", "github.com"];
+// <router-link> renders href with the base path (e.g. /link-interceptor/internal),
+// but router.push() expects a base-relative path (e.g. /internal).
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function stripBase(path: string): string {

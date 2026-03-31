@@ -112,8 +112,7 @@ nav {
   gap: 0.5rem 1rem;
 }
 
-nav a,
-nav .router-link-active {
+nav a {
   color: #4361ee;
   text-decoration: none;
   padding: 0.25rem 0;

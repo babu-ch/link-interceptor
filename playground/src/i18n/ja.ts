@@ -54,9 +54,10 @@ export default {
     routerLinkGotcha: "ハマりどころ: router-link replace",
     routerLinkGotchaDesc:
       "インターセプターは <router-link replace> のクリックも捕捉します。コールバックが ctx.preventDefault() と router.push() を呼ぶと、replace プロップが無視され、履歴が置換ではなく追加されます。",
-    routerLinkReplace: "router-link で Home へ (replace, data-no-intercept 付き) — クリック後、戻るボタンを押してみてください",
+    routerLinkReplaceBroken: "回避なし — replace が無視される（クリック後、戻るボタンで確認）",
+    routerLinkReplaceFixed: "data-no-intercept 付き — replace が機能する（クリック後、戻るボタンで比較）",
     routerLinkGotchaNote:
-      "上のリンクには data-no-intercept 属性が付いています。コールバックがこれを検知し ctx.preventDefault() をスキップするため、RouterLink が replace 付きでナビゲーションします。クリック後に戻るボタンを押すと、このページには戻りません。",
+      "1つ目のリンクは回避なし: インターセプターが preventDefault() + router.push() を呼ぶため replace が失われ、履歴が追加されます。2つ目は data-no-intercept 付き: コールバックが preventDefault() をスキップし、RouterLink が replace 付きでナビゲーションします。",
     routerLinkWorkaround:
       "回避方法: replace などのプロップを保持したい <router-link> に data-no-intercept 属性を付けます。コールバックで ctx.anchor.hasAttribute('data-no-intercept') をチェックし、ctx.preventDefault() をスキップして RouterLink にナビゲーションを任せます。実装は main.ts を参照してください。",
   },
