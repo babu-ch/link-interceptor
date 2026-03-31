@@ -44,6 +44,21 @@ export default {
     nested: "Nested elements",
     nestedDesc: "Clicks on child elements inside {tag} are also detected",
     nestedLink: "Decorated link",
+    routerLink: "Router Link coexistence",
+    routerLinkDesc:
+      "Both <router-link> and plain <a> tags work side by side. The interceptor captures both in the capture phase. RouterLink checks event.defaultPrevented and skips its own navigation when the interceptor has already handled it.",
+    routerLinkToHome: "router-link to Home",
+    plainLinkToExternal: "plain <a> to External Links",
+    routerLinkNote:
+      "Both links appear in the console — the interceptor handles all <a> clicks regardless of whether they originate from <router-link> or plain HTML.",
+    routerLinkGotcha: "Gotcha: router-link replace",
+    routerLinkGotchaDesc:
+      "The interceptor captures <router-link replace> clicks too. If the callback calls ctx.preventDefault() and router.push(), the replace prop is silently ignored — a history entry is added instead of replaced.",
+    routerLinkReplace: "router-link to Home (replace, with data-no-intercept) — click, then press Back",
+    routerLinkGotchaNote:
+      "The link above has a data-no-intercept attribute. The callback detects it and skips ctx.preventDefault(), letting RouterLink handle navigation with replace intact. Try clicking, then use the Back button — you will NOT return to this page.",
+    routerLinkWorkaround:
+      "Workaround: add a data-no-intercept attribute to <router-link> elements that need to preserve props like replace. In the callback, check ctx.anchor.hasAttribute('data-no-intercept') and skip ctx.preventDefault() so RouterLink handles navigation itself. See main.ts for the implementation.",
   },
   external: {
     title: "External Links",

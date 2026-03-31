@@ -44,6 +44,21 @@ export default {
     nested: "ネストされた要素",
     nestedDesc: "{tag} 内の子要素をクリックしても検出されます",
     nestedLink: "装飾されたリンク",
+    routerLink: "Router Link との共存",
+    routerLinkDesc:
+      "<router-link> と素の <a> タグが共存できます。インターセプターは capture フェーズで両方を捕捉します。RouterLink は event.defaultPrevented を確認し、インターセプターが処理済みの場合は自身のナビゲーションをスキップします。",
+    routerLinkToHome: "router-link で Home へ",
+    plainLinkToExternal: "素の <a> で External Links へ",
+    routerLinkNote:
+      "どちらのリンクもコンソールに表示されます — インターセプターは <router-link> 由来か素の HTML かに関わらず、全ての <a> クリックを処理します。",
+    routerLinkGotcha: "ハマりどころ: router-link replace",
+    routerLinkGotchaDesc:
+      "インターセプターは <router-link replace> のクリックも捕捉します。コールバックが ctx.preventDefault() と router.push() を呼ぶと、replace プロップが無視され、履歴が置換ではなく追加されます。",
+    routerLinkReplace: "router-link で Home へ (replace, data-no-intercept 付き) — クリック後、戻るボタンを押してみてください",
+    routerLinkGotchaNote:
+      "上のリンクには data-no-intercept 属性が付いています。コールバックがこれを検知し ctx.preventDefault() をスキップするため、RouterLink が replace 付きでナビゲーションします。クリック後に戻るボタンを押すと、このページには戻りません。",
+    routerLinkWorkaround:
+      "回避方法: replace などのプロップを保持したい <router-link> に data-no-intercept 属性を付けます。コールバックで ctx.anchor.hasAttribute('data-no-intercept') をチェックし、ctx.preventDefault() をスキップして RouterLink にナビゲーションを任せます。実装は main.ts を参照してください。",
   },
   external: {
     title: "External Links",

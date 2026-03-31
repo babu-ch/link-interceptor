@@ -119,6 +119,15 @@ Registers a capture-phase click listener on `document`. Returns a cleanup functi
 - Mutating `ctx.url` automatically updates `anchor.href`
 - Calling `ctx.preventDefault()` cancels navigation
 
+## Framework Router Coexistence
+
+The interceptor captures **all** `<a>` clicks in the capture phase, including those rendered by framework router components (`<router-link>`, React Router `<Link>`, etc.). This works correctly because:
+
+- If your `onInternalLink` calls `ctx.preventDefault()`, the router component's own handler sees `event.defaultPrevented === true` and skips its navigation — no double navigation occurs.
+- If your `onInternalLink` does **not** call `ctx.preventDefault()` (e.g. analytics only), the router component handles navigation normally.
+
+No special configuration is needed. The interceptor and framework routers work side by side out of the box.
+
 ## Use Cases
 
 | Use Case | Link Type | Example |

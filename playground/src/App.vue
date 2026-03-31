@@ -31,9 +31,9 @@ console.log = (...args: unknown[]) => {
         </button>
       </div>
       <nav>
-        <a href="/">{{ $t("nav.home") }}</a>
-        <a href="/internal">{{ $t("nav.internal") }}</a>
-        <a href="/external">{{ $t("nav.external") }}</a>
+        <router-link to="/">{{ $t("nav.home") }}</router-link>
+        <router-link to="/internal">{{ $t("nav.internal") }}</router-link>
+        <router-link to="/external">{{ $t("nav.external") }}</router-link>
         <a href="/prevent">{{ $t("nav.prevent") }}</a>
         <a href="/analytics">{{ $t("nav.analytics") }}</a>
         <a href="/confirm">{{ $t("nav.confirm") }}</a>
@@ -112,14 +112,16 @@ nav {
   gap: 0.5rem 1rem;
 }
 
-nav a {
+nav a,
+nav .router-link-active {
   color: #4361ee;
   text-decoration: none;
   padding: 0.25rem 0;
   border-bottom: 2px solid transparent;
 }
 
-nav a:hover {
+nav a:hover,
+nav a.router-link-active {
   border-bottom-color: #4361ee;
 }
 
