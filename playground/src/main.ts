@@ -5,6 +5,13 @@ import { i18n } from "./i18n";
 import { router } from "./router";
 
 const SECURITY_ALLOWLIST = ["vuejs.org", "github.com"];
+// <router-link> renders href with the base path (e.g. /link-interceptor/internal),
+// but router.push() expects a base-relative path (e.g. /internal).
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function stripBase(path: string): string {
+  return BASE && path.startsWith(BASE) ? path.slice(BASE.length) || "/" : path;
+}
 
 const app = createApp(App);
 
@@ -13,11 +20,19 @@ app.use(i18n);
 
 app.use(linkInterceptorPlugin, {
   onInternalLink(ctx) {
+    // Skip interception for links that should be handled by their own router.
+    // Add data-no-intercept to preserve RouterLink props like replace.
+    if (ctx.anchor.hasAttribute("data-no-intercept")) {
+      console.log("[RouterLink]", ctx.path);
+      pushAnalyticsEvent("internal", ctx.path);
+      return;
+    }
+
     // Form Guard: warn if form has unsaved changes
     if (window.__formIsDirty?.()) {
       ctx.preventDefault();
       if (confirm("Unsaved changes will be lost. Continue?")) {
-        router.push(ctx.path);
+        router.push(stripBase(ctx.path));
       }
       return;
     }
@@ -28,7 +43,7 @@ app.use(linkInterceptorPlugin, {
     // Analytics: record event
     pushAnalyticsEvent("internal", ctx.path);
 
-    router.push(ctx.path);
+    router.push(stripBase(ctx.path));
   },
 
   onExternalLink(ctx) {

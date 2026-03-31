@@ -121,6 +121,36 @@ Registers a capture-phase click listener on `document`. Returns a cleanup functi
 - Mutating `ctx.url` automatically updates `anchor.href`
 - Calling `ctx.preventDefault()` cancels navigation
 
+## Framework Router Coexistence
+
+The interceptor captures **all** `<a>` clicks in the capture phase, including those rendered by framework router components (`<router-link>`, React Router `<Link>`, etc.). This works correctly because:
+
+- If your `onInternalLink` calls `ctx.preventDefault()`, the router component's own handler sees `event.defaultPrevented === true` and skips its navigation — no double navigation occurs.
+- If your `onInternalLink` does **not** call `ctx.preventDefault()` (e.g. analytics only), the router component handles navigation normally.
+
+### Gotcha: `replace` and other router component props
+
+When the callback calls `ctx.preventDefault()` and `router.push()`, props like `replace` on `<router-link replace>` are silently ignored — the interceptor has no way to read component props from the DOM.
+
+To preserve router component behavior for specific links, add a `data-no-intercept` attribute and skip `preventDefault()` in the callback:
+
+```html
+<router-link to="/home" replace data-no-intercept>Home</router-link>
+```
+
+```ts
+onInternalLink(ctx) {
+  if (ctx.anchor.hasAttribute('data-no-intercept')) {
+    // Let the router component handle navigation (preserves replace, etc.)
+    return
+  }
+  ctx.preventDefault()
+  router.push(ctx.path)
+},
+```
+
+See the [playground](https://babu-ch.github.io/link-interceptor/) Internal Links page for a live demo.
+
 ## Use Cases
 
 | Use Case | Link Type | Example |

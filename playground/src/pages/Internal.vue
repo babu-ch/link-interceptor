@@ -31,5 +31,26 @@ const dynamicHtml = () => `<p>${t("internal.vhtmlContent")}</p>`;
         - {{ $t("internal.nestedDesc", { tag: "<a>" }) }}
       </p>
     </div>
+
+    <div class="demo-section">
+      <h3>{{ $t("internal.routerLink") }}</h3>
+      <p>{{ $t("internal.routerLinkDesc") }}</p>
+      <ul>
+        <li><router-link to="/">{{ $t("internal.routerLinkToHome") }}</router-link></li>
+        <li><a href="/external">{{ $t("internal.plainLinkToExternal") }}</a></li>
+      </ul>
+      <p><small>{{ $t("internal.routerLinkNote") }}</small></p>
+    </div>
+
+    <div class="demo-section">
+      <h3>{{ $t("internal.routerLinkGotcha") }}</h3>
+      <p>{{ $t("internal.routerLinkGotchaDesc") }}</p>
+      <ul>
+        <li><router-link to="/" replace>{{ $t("internal.routerLinkReplaceBroken") }}</router-link></li>
+        <li><router-link to="/" replace data-no-intercept>{{ $t("internal.routerLinkReplaceFixed") }}</router-link></li>
+      </ul>
+      <p><small>{{ $t("internal.routerLinkGotchaNote") }}</small></p>
+      <p><small>{{ $t("internal.routerLinkWorkaround") }}</small></p>
+    </div>
   </div>
 </template>
