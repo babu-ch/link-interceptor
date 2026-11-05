@@ -37,7 +37,7 @@ export default {
     toPrevent: "Ir a Prevenir",
     vhtml: "Enlaces en v-html (el HTML generado dinámicamente también es interceptado)",
     vhtmlContent:
-      'Este es contenido renderizado con v-html: <a href="/">Volver a Inicio</a> | <a href="/prevent">Ver Prevenir</a>',
+      'Este es contenido renderizado con v-html: <a href="/link-interceptor/">Volver a Inicio</a> | <a href="/link-interceptor/prevent">Ver Prevenir</a>',
     nested: "Elementos anidados",
     nestedDesc: "Los clics en elementos hijos dentro de {tag} también son detectados",
     nestedLink: "Enlace decorado",

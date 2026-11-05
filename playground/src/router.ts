@@ -7,6 +7,7 @@ import Analytics from "./pages/Analytics.vue";
 import Confirm from "./pages/Confirm.vue";
 import FormGuard from "./pages/FormGuard.vue";
 import Security from "./pages/Security.vue";
+import { PAGES, SITE_NAME } from "./seo";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,4 +21,8 @@ export const router = createRouter({
     { path: "/form-guard", component: FormGuard },
     { path: "/security", component: Security },
   ],
+});
+
+router.afterEach((to) => {
+  document.title = PAGES.find((page) => page.path === to.path)?.title ?? SITE_NAME;
 });

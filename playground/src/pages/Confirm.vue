@@ -26,7 +26,7 @@
         <li>
           <a href="https://github.com">github.com{{ $t("confirm.withoutConfirmSuffix") }}</a>
         </li>
-        <li><a href="/internal">{{ $t("confirm.internalLink") }}</a></li>
+        <li><a href="/link-interceptor/internal">{{ $t("confirm.internalLink") }}</a></li>
       </ul>
     </div>
 

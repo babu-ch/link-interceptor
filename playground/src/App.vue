@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useI18n } from "vue-i18n";
 import { LANGUAGE_NAMES } from "./i18n";
 
 const { locale } = useI18n();
+
+watchEffect(() => {
+  document.documentElement.lang = locale.value;
+});
 
 const logs = ref<string[]>([]);
 
@@ -33,11 +37,11 @@ console.log = (...args: unknown[]) => {
         <router-link to="/">{{ $t("nav.home") }}</router-link>
         <router-link to="/internal">{{ $t("nav.internal") }}</router-link>
         <router-link to="/external">{{ $t("nav.external") }}</router-link>
-        <a href="/prevent">{{ $t("nav.prevent") }}</a>
-        <a href="/analytics">{{ $t("nav.analytics") }}</a>
-        <a href="/confirm">{{ $t("nav.confirm") }}</a>
-        <a href="/form-guard">{{ $t("nav.formGuard") }}</a>
-        <a href="/security">{{ $t("nav.security") }}</a>
+        <a href="/link-interceptor/prevent">{{ $t("nav.prevent") }}</a>
+        <a href="/link-interceptor/analytics">{{ $t("nav.analytics") }}</a>
+        <a href="/link-interceptor/confirm">{{ $t("nav.confirm") }}</a>
+        <a href="/link-interceptor/form-guard">{{ $t("nav.formGuard") }}</a>
+        <a href="/link-interceptor/security">{{ $t("nav.security") }}</a>
       </nav>
     </header>
 

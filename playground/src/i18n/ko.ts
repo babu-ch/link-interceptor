@@ -37,7 +37,7 @@ export default {
     toPrevent: "차단 페이지로 이동",
     vhtml: "v-html 내 링크 (동적으로 생성된 HTML도 인터셉트)",
     vhtmlContent:
-      'v-html로 렌더링된 콘텐츠입니다: <a href="/">홈으로 돌아가기</a> | <a href="/prevent">차단 페이지 보기</a>',
+      'v-html로 렌더링된 콘텐츠입니다: <a href="/link-interceptor/">홈으로 돌아가기</a> | <a href="/link-interceptor/prevent">차단 페이지 보기</a>',
     nested: "중첩된 요소",
     nestedDesc: "{tag} 내부의 자식 요소를 클릭해도 감지됩니다",
     nestedLink: "꾸며진 링크",

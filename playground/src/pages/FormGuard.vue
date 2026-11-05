@@ -33,9 +33,9 @@ window.__formIsDirty = isDirty;
       <h3>{{ $t("formGuard.navLinks") }}</h3>
       <p>{{ $t("formGuard.navDesc") }}</p>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/internal">Internal Links</a></li>
-        <li><a href="/analytics">Analytics</a></li>
+        <li><a href="/link-interceptor/">Home</a></li>
+        <li><a href="/link-interceptor/internal">Internal Links</a></li>
+        <li><a href="/link-interceptor/analytics">Analytics</a></li>
       </ul>
     </div>
 

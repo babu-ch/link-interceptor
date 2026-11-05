@@ -24,7 +24,7 @@ const onClickCapture = (e: Event) => {
 
     <div class="demo-section">
       <h3>{{ $t("prevent.normalLink") }}</h3>
-      <p><a href="/">{{ $t("prevent.toHome") }}</a></p>
+      <p><a href="/link-interceptor/">{{ $t("prevent.toHome") }}</a></p>
     </div>
 
     <div class="demo-section">

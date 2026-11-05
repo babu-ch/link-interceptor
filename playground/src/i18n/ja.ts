@@ -37,7 +37,7 @@ home: {
     toPrevent: "Prevent Default へ",
     vhtml: "v-html 内のリンク（動的に生成されたHTMLでもインターセプト）",
     vhtmlContent:
-      'これは v-html で描画されたコンテンツです: <a href="/">Home に戻る</a> | <a href="/prevent">Prevent Default を見る</a>',
+      'これは v-html で描画されたコンテンツです: <a href="/link-interceptor/">Home に戻る</a> | <a href="/link-interceptor/prevent">Prevent Default を見る</a>',
     nested: "ネストされた要素",
     nestedDesc: "{tag} 内の子要素をクリックしても検出されます",
     nestedLink: "装飾されたリンク",
