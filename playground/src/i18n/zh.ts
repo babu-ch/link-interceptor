@@ -37,7 +37,7 @@ export default {
     toPrevent: "前往阻止跳转",
     vhtml: "v-html 中的链接（动态生成的 HTML 也会被拦截）",
     vhtmlContent:
-      '这是通过 v-html 渲染的内容：<a href="/">返回首页</a> | <a href="/prevent">查看阻止跳转</a>',
+      '这是通过 v-html 渲染的内容：<a href="/link-interceptor/">返回首页</a> | <a href="/link-interceptor/prevent">查看阻止跳转</a>',
     nested: "嵌套元素",
     nestedDesc: "点击 {tag} 内的子元素也会被检测到",
     nestedLink: "装饰过的链接",

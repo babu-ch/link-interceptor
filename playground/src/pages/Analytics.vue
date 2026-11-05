@@ -14,10 +14,10 @@ window.__analyticsEvents = events;
     <div class="demo-section">
       <h3>{{ $t("analytics.tryClick") }}</h3>
       <ul>
-        <li><a href="/internal">{{ $t("analytics.internalLink") }}</a></li>
+        <li><a href="/link-interceptor/internal">{{ $t("analytics.internalLink") }}</a></li>
         <li><a href="https://vuejs.org">vuejs.org</a></li>
         <li><a href="https://github.com">github.com</a></li>
-        <li><a href="/external">{{ $t("analytics.anotherDemo") }}</a></li>
+        <li><a href="/link-interceptor/external">{{ $t("analytics.anotherDemo") }}</a></li>
       </ul>
     </div>
 

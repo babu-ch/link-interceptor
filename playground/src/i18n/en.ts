@@ -37,7 +37,7 @@ home: {
     toPrevent: "Go to Prevent Default",
     vhtml: "Links in v-html (dynamically generated HTML is also intercepted)",
     vhtmlContent:
-      'This is content rendered with v-html: <a href="/">Back to Home</a> | <a href="/prevent">See Prevent Default</a>',
+      'This is content rendered with v-html: <a href="/link-interceptor/">Back to Home</a> | <a href="/link-interceptor/prevent">See Prevent Default</a>',
     nested: "Nested elements",
     nestedDesc: "Clicks on child elements inside {tag} are also detected",
     nestedLink: "Decorated link",
